@@ -24,6 +24,9 @@ var wordList = []
 // 'good', 'old', 'road', 'and']
 // alpha = ['b', 'a', 'd', 'g', 'd', 'o', 'y']
 alpha = ['s', 'o', 't', 'x', 'w']
+// alpha = ['s', 'o', 't',
+// 'o', 't', 'w',
+// 'o']
 console.log(alpha)
 
 // console.log(words.length)
@@ -71,22 +74,48 @@ for(var i = 0; i < words.length; i++){
 }
     console.log(wordList)
 
+    // var alphaFromWord = []
 
     // for(var i = 0; i < wordList.length; i++){
+    //     // var newWordList = wordList[i - 1].split('')
     //     var newWordList = wordList[i].split('')
+
     //     for(var j = 0; j < newWordList.length; j++){
     //         for(var k = 0; k < alpha.length; k++){
-    //             if(newWordList[j] == alpha[k]){
-    //                 console.log("KEEPING IT", alpha[k])
-    //                 break
-    //             }
-    //             else{
-    //                 console.log("COULDNT FIND", alpha[k])
-    //                 // console.log()
-    //             }
+
+    //         if(alpha[k] != newWordList[j]){
+    //             alphaFromWord.push(alpha[k])
+    //             break
+    //             // console.log(alpha[k])
     //         }
     //     }
     // }
+        // alphaFromWord.push(newWordList)
+
+        // console.log(newWordList, 'and', newWordList2)
+        // var alpha3 = [...alpha]
+        // for(var j = 0; j < newWordList.length; j++){
+        //     // if(newWordList[j] == new)
+        //     for(var k = 0; k < newWordList2.length; k++){
+        //         if(newWordList[j] != newWordList2[k]){
+        //             alphaFromWord.push(newWordList[j], newWordList2[k])
+        //             newWordList2.splice(k, 1)
+        //             break
+        //         }
+            //     if(newWordList[j] == alpha[k]){
+            //         // console.log("KEEPING IT", newWordList[j])
+            //         alphaFromWord.push(newWordList[j])
+            //         alpha3.splice(k, 1, 1)
+            //         break
+            //     }
+                // else{
+                //     // console.log("COULDNT FIND", newWordList[j])
+                //     console.log(newWordList[j])
+                // }
+            // }
+        // }
+    // }
+    // console.log(alphaFromWord)
     // Loop to select random number of SELECTED words
     // var numberOfWords = Math.floor(Math.random() * 3) + 1 
     // for(var a = 0; a <= numberOfWords; a++){
