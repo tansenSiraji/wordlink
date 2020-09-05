@@ -13,7 +13,7 @@ var alphabet = "abcdefghijklmnopqrstuvwxyz"
 var alpha1 = alphabet.split('')
 // console.log(alpha1)
 var alpha = []
-for(var i = 0; i <= 4; i++){
+for(var i = 0; i <= 5; i++){
     alpha.push(alpha1[Math.floor(Math.random() * (alpha1.length - i)) + i ])
 }
 // console.log(alpha)
@@ -22,63 +22,45 @@ for(var i = 0; i <= 4; i++){
 // 'bag',  'bed', 'board',
 // 'body', 'day', 'go',
 // 'good', 'old', 'road', 'and']
-// alpha = ['b', 'a', 'd', 'g', 'd', 'o', 'y']
+// alpha = ['b', 'a', 'd', 'g', 'd', 'o', 'y', 'x', 'q', 'm']
 // alpha = ['s', 'o', 't', 'x', 'w', 'p', 'q']
-// alpha = ['s', 'o', 't',
+// alpha = ['m', 'i', 'b', 'y', 'm']
 // 'o', 't', 'w',
 // 'o']
-console.log(alpha)
+console.log("Randomly Generated Letters:",alpha)
 
 // console.log(words.length)
 
 // Loop to find matched words based on the Randomly Generated Letters
-for(var i = 0; i < words.length; i++){
-    // console.log("LOOP 1")
+for (var i = 0; i < words.length; i++) {
     var newWord = words[i].split('')
-    // console.log(newWord)
-  var one = 0
-  var alpha2 = [...alpha]
-  var newWord2 = [...newWord]
-    //   console.log(newWord2, words[i], one)
-    // console.log(alpha2)
-
-    // console.log(newWord.length)
-    for(var j = 0; j < newWord.length; j++){
-        // console.log("LOOP 2")
-        for(var k = 0; k < alpha2.length; k++){
-            // console.log("LOOP 3")
-            if(newWord[j] == alpha2[k]){
+    var one = 0
+    var alpha2 = [...alpha]
+    var newWord2 = [...newWord]
+    for (var j = 0; j < newWord.length; j++) {
+        for (var k = 0; k < alpha2.length; k++) {
+            if (newWord[j] == alpha2[k]) {
                 one = one + 1
                 // console.log(newWord2[j], ' = ', alpha2[k], "MATCHES", one)
-                // wordList.push(newWord2[j]) 
                 alpha2.splice(k, 1, 1)
                 break
-                // console.log(k)
-                // newWord2.splice(j, 1, 1)
-                // console.log(alpha2, newWord2)
-            }else{
+
+            } else {
                 // console.log(newWord, 'didnt match for' ,newWord[j])
             }
-            
         }
-        // newWord2.splice(j, 1)
-        // console.log(one, words[i].length)
-        
-        
     }
     // console.log(one)
-    if(one == words[i].length){
+    if (one == words[i].length) {
         // console.log("One:", one, " Word length:", words[i].length)
-            wordList.push(words[i]) 
-        }
+        wordList.push(words[i])
+    }
 }
-    console.log(wordList)
+    console.log("Generated Words:", wordList)
 
     
-
-    var alphaFromWord = []
+    //To generate an array of letters to be deleted from the Randomly selected letters
     var alpha3 = [...alpha]
-
     var x
     for(var i = 0; i < wordList.length; i++){
         var newWordList = wordList[i].split('')
@@ -106,19 +88,52 @@ for(var i = 0; i < words.length; i++){
             }
         }
         // alphaFromWord.push(alpha3)
-                    // console.log(alpha3)
+                    // console.log(alpha3, "baad")
     }
+    
 
-    for(var i = 0; i < alpha.length; i++){
-        for(var k = 0; k < alpha3.length; k++){
-            if(alpha[i] == alpha3[k]){
-                alpha.splice(i, 1)
+        //To generate the final set of letters
+        var alpha4 = [...alpha]
+        for(var i = 0; i < alpha3.length; i++){
+            for(var j = 0; j < alpha4.length; j++){
+                if(alpha3[i] == alpha4[j]){
+                    alpha3.splice(i, 1, '')
+                    alpha4.splice(j, 1)
+                    break
+                }
             }
         }
-    }
-    console.log(alpha, "Alpha")
+        console.log("Final Set of Letters:",alpha4)
+        console.log(alpha4.length)
 
-    // console.log(alphaFromWord)
+            // var alphaFromWord = []
+
+           // var alphabet = [];
+        // for(var i = 0; i < alpha.length; i++){
+        //     for(var j = 0; j < alpha3.length; j ++){
+        //       var loc = alpha.indexOf(alpha3[j]);
+        //       if(loc > -1){
+        //         alpha.splice(loc, 1);
+        //       }
+        //     }
+        //   }
+
+
+        // alpha = alpha.toString().split(',');
+        // alpha3 = alpha3.toString().split(',');
+
+        // for (var i in alpha) {
+        //     if (alpha3.indexOf(alpha[i]) === -1) {alphabet.push(alpha[i])};
+            
+        // }
+        // for (i in alpha3) {
+        //     if (alpha.indexOf(alpha3[i]) === -1) alphabet.push(alpha3[i]);
+        // }
+        // alphabet.sort((a, b) => a - b);
+
+        // console.log(alpha, "Alpha")
+        // console.log("Deleted Letters:", alpha3)
+        
 
 
     // for(var i = 0; i < wordList.length; i++){
