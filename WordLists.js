@@ -9,13 +9,13 @@ var wordList = []
 // var words2 = ['cat', 'act', 'at', 'ball', 'attac', 'caat']
 
 //Randomly Generated Letters
-// var alphabet = "abcdefghijklmnopqrstuvwxyz"
-// var alpha1 = alphabet.split('')
-// // console.log(alpha1)
-// var alpha = []
-// for(var i = 0; i <= 4; i++){
-//     alpha.push(alpha1[Math.floor(Math.random() * (alpha1.length - i)) + i ])
-// }
+var alphabet = "abcdefghijklmnopqrstuvwxyz"
+var alpha1 = alphabet.split('')
+// console.log(alpha1)
+var alpha = []
+for(var i = 0; i <= 4; i++){
+    alpha.push(alpha1[Math.floor(Math.random() * (alpha1.length - i)) + i ])
+}
 // console.log(alpha)
 // words = [ 'dog', 'do', 'gone', 'go', 'good', 'bad', 'bag', 'add']
 // words = ['add',  'ago', 'and',
@@ -23,7 +23,7 @@ var wordList = []
 // 'body', 'day', 'go',
 // 'good', 'old', 'road', 'and']
 // alpha = ['b', 'a', 'd', 'g', 'd', 'o', 'y']
-alpha = ['s', 'o', 't', 'x', 'w']
+// alpha = ['s', 'o', 't', 'x', 'w', 'p', 'q']
 // alpha = ['s', 'o', 't',
 // 'o', 't', 'w',
 // 'o']
@@ -74,7 +74,52 @@ for(var i = 0; i < words.length; i++){
 }
     console.log(wordList)
 
-    // var alphaFromWord = []
+    
+
+    var alphaFromWord = []
+    var alpha3 = [...alpha]
+
+    var x
+    for(var i = 0; i < wordList.length; i++){
+        var newWordList = wordList[i].split('')
+        // console.log(newWordList)
+        var newWordList2 = [...newWordList]
+        for(var j = 0; j < newWordList2.length; j++){
+            // console.log("hahaha")
+            for(var k = 0; k < alpha3.length; k++){
+                if(newWordList2[j] == alpha3[k]){
+                    // console.log(newWordList2[j], "=", alpha3[k])
+                    alpha3.splice(k, 1)
+                    newWordList2.splice(j, 1, '')
+                    // console.log(alpha3)
+                    // alpha3 = alpha3
+
+
+                    // k += 1
+                    break
+                }
+                else{
+                    // console.log(newWordList[j], "!=", alpha[k])
+                    // console.log(alpha3, "ELSE SECTION")
+
+                }
+            }
+        }
+        // alphaFromWord.push(alpha3)
+                    // console.log(alpha3)
+    }
+
+    for(var i = 0; i < alpha.length; i++){
+        for(var k = 0; k < alpha3.length; k++){
+            if(alpha[i] == alpha3[k]){
+                alpha.splice(i, 1)
+            }
+        }
+    }
+    console.log(alpha, "Alpha")
+
+    // console.log(alphaFromWord)
+
 
     // for(var i = 0; i < wordList.length; i++){
     //     // var newWordList = wordList[i - 1].split('')
