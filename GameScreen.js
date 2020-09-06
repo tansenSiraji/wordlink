@@ -190,8 +190,9 @@ class GameScreen extends Component {
       //Main View
       <View style={{
         flex: 1,
+        backgroundColor: '#37474f',
       }}>
-        <ImageBackground source={require('./Assets/Background.png')} style={styles.image}>
+        {/* <ImageBackground source={require('./Assets/Background.png')} style={styles.image}> */}
         <View style={{
           flex:3,
           flexDirection: 'column',
@@ -330,7 +331,7 @@ class GameScreen extends Component {
             
           </View>
         </View>
-        </ImageBackground>
+        {/* </ImageBackground> */}
       </ View>
     )
   }
