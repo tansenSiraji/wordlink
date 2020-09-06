@@ -1,1090 +1,185 @@
-import React, { Component, useEffect, useState } from 'react';
-import { StyleSheet, View, FlatList, ActivityIndicator, Image, TouchableOpacity, Alert, Button, Text, Dimensions, BackHandler } from 'react-native';
-import CountDown from 'react-native-countdown-component';
-import { BannerAd, BannerAdSize, TestIds, InterstitialAd, AdEventType } from '@react-native-firebase/admob';
+var words;
+//Dictionary Array
+words = ["ability","able","about","above","accept","match","math","according","account","across","act","action","activity","actually","add","address","administration","admit","adult","affect","after","again","against","age","agency","agent","ago","agree","agreement","ahead","air","all","allow","almost","alone","along","already","also","although","always", "male", "meal", "am", "American","among","amount","analysis","and","animal","another","answer","any","anyone","anything","appear","apply","approach","area","argue","arm","around","arrive","art","article","artist","as","ask","assume","at","attack","attention","attorney","audience","author","authority","available","avoid","away","baby","back","bad","bag","ball","bank","bar","base","be","beat","beautiful","because","become","bed","before","begin","behavior","behind","believe","benefit","best","better","between","beyond","big","bill","billion","bit","black","blood","blue","board","body","book","born","both","box","boy","break","bring","brother","budget","build","building","business","but","buy","by","call","camera","campaign","can","cancer","candidate","capital","car","card","care","career","carry","case","catch","cause","cell","center","central","century","certain","certainly","chair","challenge","chance","change","character","charge","check","child","choice","choose","church","citizen","city","civil","claim","class","clear","clearly","close","coach","cold","collection","college","color","come","commercial","common","community","company","compare","computer","concern","condition","conference","Congress","consider","consumer","contain","continue","control","cost","could","country","couple","course","court","cover","create","crime","cultural","culture","cup","current","customer","cut","dark","data","daughter","day","dead","deal","death","debate","decade","decide","decision","deep","defense","degree","Democrat","democratic","describe","design","despite","detail","determine","develop","development","die","difference","different","difficult","dinner","direction","director","discover","discuss","discussion","disease","do","doctor","dog","door","down","draw","dream","drive","drop","drug","during","each","early","east","easy","eat","economic","economy","edge","education","effect","effort","eight","either","election","else","employee","end","energy","enjoy","enough","enter","entire","environment","environmental","especially","establish","even","evening","event","ever","every","everybody","everyone","everything","evidence","exactly","example","executive","exist","expect","experience","expert","explain","eye","face","fact","factor","fail","fall","family","far","fast","father","fear","federal","feel","feeling","few","field","fight","figure","fill","film","final","finally","financial","find","fine","finger","finish","fire","firm","first","fish","five","floor","fly","focus","follow","food","foot","for","force","foreign","forget","form","former","forward","four","free","friend","from","front","full","fund","future","game","garden","gas","general","generation","get","girl","give","glass","go","goal","good","government","great","green","ground","group","grow","growth","guess","gun","guy","hair","half","hand","hang","happen","happy","hard","have","he","head","health","hear","heart","heat","heavy","help","her","here","herself","high","him","himself","his","history","hit","hold","home","hope","hospital","hot","hotel","hour","house","how","however","huge","human","hundred","husband","I","idea","identify","if","image","imagine","impact","important","improve","in", "ink","include","including","increase","indeed","indicate","individual","industry","information","inside","instead","institution","interest","interesting","international","interview","into","investment","involve","issue","it","item","its","itself","job","join","just","keep","key","kid","kill","kind","kitchen","know","knowledge","land","language","large","last","late","later","laugh","law","lawyer","lay","lead","leader","learn","least","leave","left","leg","legal","less","let","letter","level","lie","life","light","like","likely","line","list","listen","little","live","local","long","look","lose","loss","lot","love","low","machine","magazine","main","maintain","major","majority","make","man","manage","management","manager","many","market","marriage","material","matter","may","maybe","me","mean","measure","media","medical","meet","meeting","member","memory","mention","message","method","middle","might","military","million","mind","minute","miss","mission","model","modern","moment","money","month","more","morning","most","mother","mouth","move","movement","movie","Mr","Mrs","much","music","must","my","myself","name","nation","national","natural","nature","near","nearly","necessary","need","network","never","new","news","newspaper","next","nice","night","no","none","nor","north","not","note","nothing","notice","now","n't","number","occur","of","off","offer","office","officer","official","often","oh","oil","ok","old","on","once","one","only","onto","open","operation","opportunity","option","or","order","organization","other","others","our","out","outside","over","own","owner","page", "pie", "pile", "lip", "pain","painting","paper","parent","part","participant","particular","particularly","partner","party","pass","past","patient","pattern","pay","peace","people","per","perform","performance","perhaps","period","person","personal","phone","physical","pick","picture","piece","place","plan","plant","play","player","PM","point","police","policy","political","politics","poor","popular","population","position","positive","possible","power","practice","prepare","present","president","pressure","pretty","prevent","price","private","probably","problem","process","produce","product","production","professional","professor","program","project","property","protect","prove","provide","public","pull","purpose","push","put","quality","question","quickly","quite","race","radio","raise","range","rate","rather","reach","read","ready","real","reality","realize","really","reason","receive","recent","recently","recognize","record","red","reduce","reflect","region","relate","relationship","religious","remain","remember","remove","report","represent","Republican","require","research","resource","respond","response","responsibility","rest","result","return","reveal","rich","right","rise","risk","road","rock","role","room","rule","run","safe","same","save","say","scene","school","science","scientist","score","sea","season","seat","second","section","security","see","seek","seem","sell","send","senior","sense","series","serious","serve","service","set","seven","several","sex","sexual","shake","share","she","shoot","short","shot","should","shoulder","show","side","sign","significant","similar","simple","simply","since","sing","single","sister","sit","site","situation","six","size","skill","skin","small","smile","so","social","society","soldier","some","somebody","someone","something","sometimes","son","song","soon","sort","sound","source","south","southern","space","speak","special","specific","speech","spend","sport","spring","staff","stage","stand","standard","star","start","state","statement","station","stay","step","still","stock","stop","store","story","strategy","street","strong","structure","student","study","stuff","style","subject","success","successful","such","suddenly","suffer","suggest","summer","support","sure","surface","system","table","take","talk","task","tax","teach","teacher","team","technology","television","tell","ten","tend","term","test","than","thank","that","the","their","them","themselves","then","theory","there","these","they","thing","think","third","this","those","though","thought","thousand","threat","three","through","throughout","throw","thus","time","to","today","together","tonight","too","top","total","tough","toward","town","trade","traditional","training","travel","treat","treatment","tree","trial","trip","trouble","true","truth","try","turn","TV","two","type","under","understand","unit","until","up","upon","us","use","usually","value","various","very","victim","view","violence","visit","voice","vote","wait","walk","wall","want","war","watch","water","way","we","weapon","wear","week","weight","well","west","western","what","whatever","when","where","whether","which","while","white","who","whole","whom","whose","why","wide","wife","will","win","wind","window","wish","with","within","without","woman","wonder","word","work","worker","world","worry","would","write","writer","wrong","yard","yeah","year","yes","yet","you","young","your","yourself"]
 
+var wordList = []
 
-//import all the components we will need
-let randItem, items
-var RandomNumber, power, discardCount = 4, addCount = 0
-const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy';
-const adUnitId2 = __DEV__ ? TestIds.BANNER : 'ca-app-pub-xxxxxxxxxxxxx/yyyyyyyyyyyyyy';
-// AdSize adSize = new AdSize(300, 50);
+//Sample Dictionary
+// var words2 = ['cat', 'act', 'at', 'ball', 'attac', 'caat']
 
-const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
-  requestNonPersonalizedAdsOnly: true,
-  keywords: ['fashion', 'clothing'],
-});
-
-function Ad() {
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    const eventListener = interstitial.onAdEvent(type => {
-      if (type === AdEventType.LOADED) {
-        setLoaded(true);
-      }
-    });
-
-    // Start loading the interstitial straight away
-    // interstitial.load();
-
-    // Unsubscribe from events on unmount
-    return () => {
-      eventListener();
-    };
-  }, []);
-
-  // No advert ready to show yet
-  if (!loaded) {
-    return null;
-  }
-
-  return (
-    <View>
-      {interstitial.show()}
-    </View>
-  )
-  // return (
-  //   <Button
-  //     title="Show Interstitial"
-  //     onPress={() => {
-  //       interstitial.show();
-  //     }}
-  //   />
-  // );
+//Randomly Generated Letters
+var alphabet = "abcdefghijklmnopqrstuvwxyz"
+var alpha1 = alphabet.split('')
+// console.log(alpha1)
+var alpha = []
+for(var i = 0; i <= 5; i++){
+    alpha.push(alpha1[Math.floor(Math.random() * (alpha1.length - i)) + i ])
 }
-export default class GridTable extends Component {
-  constructor() {
-    super();
-    this.backButtonClick = this.backButtonClick.bind(this);
+// console.log(alpha)
+// words = [ 'dog', 'do', 'gone', 'go', 'good', 'bad', 'bag', 'add']
+// words = ['add',  'ago', 'and',
+// 'bag',  'bed', 'board',
+// 'body', 'day', 'go',
+// 'good', 'old', 'road', 'and']
+// alpha = ['b', 'a', 'd', 'g', 'd', 'o', 'y', 'x', 'q', 'm']
+// alpha = ['s', 'o', 't', 'x', 'w', 'p', 'q']
+// alpha = ['m', 'i', 'b', 'y', 'm']
+// 'o', 't', 'w',
+// 'o']
+console.log("Randomly Generated Letters:",alpha)
 
-    // this.randCard = this.randCard.bind(this);
-    // this.randCard2 = this.randCard2.bind(this);
-    this.state = {
-      dataSource: {},
-      randSource: {}, updateCount: [], topSection: [], sumValue: 0, flag: false, index2: 0, points: 0, second: 30, flag2: false
-    };
+// console.log(words.length)
 
-  }
+// Loop to find matched words based on the Randomly Generated Letters
+for (var i = 0; i < words.length; i++) {
+    var newWord = words[i].split('')
+    var one = 0
+    var alpha2 = [...alpha]
+    var newWord2 = [...newWord]
+    for (var j = 0; j < newWord.length; j++) {
+        for (var k = 0; k < alpha2.length; k++) {
+            if (newWord[j] == alpha2[k]) {
+                one = one + 1
+                // console.log(newWord2[j], ' = ', alpha2[k], "MATCHES", one)
+                alpha2.splice(k, 1, 1)
+                break
 
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerTitleStyle: {
-        textAlign: "center",
-        flex: 1
-      },
-      headerStyle: {
-        backgroundColor: '#FFFFFF',
-      },
-      title: "২০৪৮",
-      headerLeft: null
-    }
-  }
-
-  _interval: any;
-
-  onStart = () => {
-    // var flag = this.state.flag
-    const { navigate, state } = this.props.navigation
-    var points = this.state.points
-    this._interval = setInterval(() => {
-      this.checkSum()
-      this.setState({
-        second: this.state.second - 1,
-
-      })
-      if (this.state.second == 0) {
-        this.setState({
-          second: 0, flag: true, flag2: false
-        });
-        // this.setState({flag: true})
-        clearInterval(this._interval);
-        Alert.alert(
-          'খেলা শেষ',
-          ' ',
-          [
-            {
-              text: 'CONTINUE', onPress: () => navigate(
-                "Over", { points: this.state.points }
-              )
-            },
-
-            // {text: 'বন্ধু', onPress: () => this.props.navigation.navigate('NewKeyboard', {reload:this.props.navigation.getParam("reload"), gameName: this.state.text, value: this.state.gametype,bot:false})}
-
-          ],
-          { cancelable: false })
-        { interstitial.show() }
-
-        // Alert.alert("Time Over");
-        // <Ad />
-
-      }
-    }, 1000);
-  }
-  componentDidMount() {
-    var that = this;
-    var second = this.state.second
-    var points = this.state.points
-    // var discardCount = 4
-    updateCount = { value: '' }
-    topSection = { value: '' }
-    // RandomNumber = Math.floor(Math.random() * 16) + 1 ;
-    interstitial.load();
-    BackHandler.addEventListener('hardwareBackPress', this.backButtonClick);
-
-
-    discardCount = 4
-    // this.advert
-    items = Array.apply(null, Array(16)).map((v, i) => {
-      let topSection = this.state.topSection
-      // if((i + 1) % 2 == 0){
-      // if((RandomNumber % 2) == 0){
-      // //console.log(RandomNumber)
-      var a = Math.floor(Math.random() * 8) + 1;
-      // while(a < 8){
-      power = Math.pow(2, a)
-      // }
-      // var zero = 0
-      topSection.push({ value: 0 })
-      // return { id: i, src:  power };
-      return { id: i, src: "                        " };
-      // return { id: i, src: '১০২৪' };
-
-
-      // }
-      // }
-      // else{
-      //     return { id: i, src:  '' };
-      // }
-
-    });
-    that.setState({
-      dataSource: items,
-    });
-
-    randItem = Array.apply(null, Array(2)).map((v, i) => {
-      var a = Math.floor(Math.random() * 8) + 1;
-      let updateCount = this.state.updateCount
-
-      // while(a < 8){
-      power = Math.pow(2, a)
-      // }
-      // if((i == 2) || (i == 3)){
-      //     // //console.log(i, 'Discard')
-      //     return { id: i, src:  "Discard" };
-
-      // }
-      // else{
-      // //console.log(i, 'Power')
-      // updateCount = {value:}
-      updateCount.push({ value: power })
-      // if(power == 2){
-      //  console.log('২')
-      //   // var powerBangla = '২'
-      // }
-      if (i == 1) {
-        return { id: i, src: this.banglaConverter(power) };
-      }
-      else {
-        return { id: i, src: this.banglaConverter(power) };
-      }
-
-      // }
-    });
-    that.setState({
-      randSource: randItem,
-    });
-  }
-
-  backButtonClick() {
-    clearInterval(this._interval);
-    this.props.navigation.navigate('Basic');
-    return true;
-  }
-
-  sound() {
-
-    // Import the react-native-sound module
-    var Sound = require('react-native-sound');
-
-    // Enable playback in silence mode
-    Sound.setCategory('Playback');
-
-    // Load the sound file 'whoosh.mp3' from the app bundle
-    var whoosh = new Sound('water.mp3', Sound.MAIN_BUNDLE, (error) => {
-      if (error) {
-        //console.log('failed to load the sound', error);
-        return;
-      }
-      // loaded successfully
-      // //console.log('duration in seconds: ' + whoosh.getDuration() + 'number of channels: ' + whoosh.getNumberOfChannels());
-
-      // Play the sound with an onEnd callback
-      whoosh.play((success) => {
-        if (success) {
-          console.log('successfully finished playing');
-        } else {
-          console.log('playback failed due to audio decoding errors');
-        }
-      });
-
-    });
-    // whoosh.setNumberOfLoops(-1);
-    whoosh.release()
-  }
-
-  banglaConverter(sValue) {
-    var source
-    if (sValue == 2) {
-      source = '  ২  '
-    }
-    else if (sValue == 4) {
-      source = '  ৪  '
-    }
-    else if (sValue == 8) {
-      source = '  ৮  '
-    }
-    else if (sValue == 16) {
-      source = '  ১৬  '
-    }
-    else if (sValue == 32) {
-      source = '  ৩২  '
-    }
-    else if (sValue == 64) {
-      source = '  ৬৪  '
-    }
-    else if (sValue == 128) {
-      source = '  ১২৮  '
-    }
-    else if (sValue == 256) {
-      source = '  ২৫৬  '
-    }
-    else if (sValue == 512) {
-      source = '  ৫১২  '
-    }
-    else if (sValue == 1024) {
-      source = '১০২৪'
-    }
-    else if (sValue == 2048) {
-      source = '২০৪৮'
-    }
-    return source
-  }
-
-  setAbove(i, sValue, topSection) {
-
-    var initialSource = "                        "
-    var source = this.banglaConverter(sValue)
-
-    if (i >= 12 && i <= 15) {
-      if (items[i - 12].src != initialSource) {
-        if (items[i - 8].src != initialSource) {
-          if (items[i - 4].src != initialSource) {
-            //console.log("ALL GOOD")
-          }
-          else {
-            items[i - 4].src = source
-            topSection[i - 4].value = sValue
-            this.setState({ uri: source })
-          }
-        }
-        else {
-          items[i - 8].src = source
-          topSection[i - 8].value = sValue
-          this.setState({ uri: source })
-        }
-      }
-      else {
-        items[i - 12].src = source
-        topSection[i - 12].value = sValue
-        this.setState({ uri: source })
-      }
-    }
-    else if (i >= 8 && i <= 11) {
-      if (items[i - 8].src != initialSource) {
-        if (items[i - 4].src != initialSource) {
-          //console.log("ALL GOOD")
-        }
-        else {
-          items[i - 4].src = source
-          topSection[i - 4].value = sValue
-          this.setState({ uri: source })
-        }
-      }
-      else {
-        items[i - 8].src = source
-        topSection[i - 8].value = sValue
-        this.setState({ uri: source })
-      }
-    }
-    else if (i >= 4 && i <= 7) {
-      if (items[i - 4].src != initialSource) {
-        //console.log("ALL GOOD")
-      }
-      else {
-        items[i - 4].src = source
-        topSection[i - 4].value = sValue
-        this.setState({ uri: source })
-      }
-    }
-
-  }
-
-  setBelow(i, sValue, topSection) {
-
-    var source = this.banglaConverter(sValue)
-    var initialSource = "                        "
-    var index2 = this.state.index2
-    // var flag = this.state.flag
-
-    if (i == 0 || i == 1 || i == 2 || i == 3) {
-      if (items[i + 4].src != initialSource) {
-        if (items[i + 8].src != initialSource) {
-          if (items[i + 12].src != initialSource) {
-            // Alert.alert("FULL")
-          }
-          else {
-            items[i + 12].src = source
-            topSection[i + 12].value = sValue
-            this.setState({ uri: source })
-            this.slideValue(index2)
-          }
-        }
-        else {
-          items[i + 8].src = source
-          topSection[i + 8].value = sValue
-          this.setState({ uri: source })
-          this.slideValue(index2)
-        }
-
-      }
-      else {
-        items[i + 4].src = source
-        topSection[i + 4].value = sValue
-        this.setState({ uri: source })
-        this.slideValue(index2)
-      }
-    }
-    else if (i == 4 || i == 5 || i == 6 || i == 7) {
-
-      if (items[i + 4].src != initialSource) {
-        if (items[i + 8].src != initialSource) {
-          // Alert.alert("FULL")
-        } else {
-          items[i + 8].src = source
-          topSection[i + 8].value = sValue
-          this.setState({ uri: source })
-          this.slideValue(index2)
-        }
-      }
-      else {
-        items[i + 4].src = source
-        topSection[i + 4].value = sValue
-        this.setState({ uri: source })
-        this.slideValue(index2)
-      }
-    }
-    else if (i == 8 || i == 9 || i == 10 || i == 11) {
-      if (items[i + 4].src != initialSource) {
-        // Alert.alert("FULL")
-      } else {
-        items[i + 4].src = source
-        topSection[i + 4].value = sValue
-        this.setState({ uri: source })
-        this.slideValue(index2)
-      }
-    }
-    else if (i == 12 || i == 13 || i == 14 || i == 15) {
-      if (items[i].src != initialSource) {
-        // Alert.alert("FULL")
-        // this.setState({flag: true})
-      }
-    }
-    return source
-  }
-
-  slideValue(index2) {
-    var updateCount = this.state.updateCount
-    var a = Math.floor(Math.random() * 8) + 1;
-    var powerOf2 = Math.pow(2, a)
-    // if(index2 == 3){
-    updateCount[index2].value = updateCount[index2 - 1].value
-    //Doubt
-    randItem[index2].src = (randItem[index2 - 1].src)
-
-    updateCount[index2 - 1].value = powerOf2
-    randItem[index2 - 1].src = this.banglaConverter(powerOf2)
-
-    this.setState({ index2: 0 })
-  }
-
-  checkSum() {
-    var topSection = this.state.topSection
-    var points = this.state.points
-    var initialSource = "                        "
-    var newSum = 0
-    var second = this.state.second
-    var index2 = this.state.index2
-    // console.log("CHECK SUM")
-
-    for (var j = 4; j <= 15; j++) {
-      //console.log(items.length)
-      if (j >= 4 && j <= 7) {
-        if (items[j - 4].src != initialSource) {
-          if (topSection[j - 4].value == topSection[j].value) {
-            newSum = topSection[j].value + topSection[j - 4].value
-            //To set the max limit to 2048
-            if (newSum > 2048) {
-              newSum = 2048
+            } else {
+                // console.log(newWord, 'didnt match for' ,newWord[j])
             }
-            var newSource = this.banglaConverter(newSum)
-            // this.slideValue(index2)
-            // addCount = addCount + 1
-            // console.log(addCount, "ADD COUNT")
-            if (discardCount < 4) {
-              addCount = addCount + 1
-              if (addCount >= 4) {
-                discardCount = discardCount + 1
-                addCount = 0
-                console.log(addCount, 'should be zero')
-              }
-            }
-
-
-            topSection[j - 4].value = newSum
-            items[j - 4].src = newSource
-
-            topSection[j].value = topSection[j + 4].value
-            items[j].src = items[j + 4].src
-
-            topSection[j + 4].value = topSection[j + 8].value
-            items[j + 4].src = items[j + 8].src
-            points = points + 1
-            this.setState({ points: points, second: this.state.second + 5 })
-            // console.log("Points: ", points)
-            this.checkSum()
-          }
         }
-      }
-      if (j >= 8 && j <= 11) {
-        if (items[j - 4].src != initialSource) {
-          if (topSection[j - 4].value == topSection[j].value) {
-            newSum = topSection[j].value + topSection[j - 4].value
-            //To set the max limit to 2048
-            if (newSum > 2048) {
-              newSum = 2048
-            }
-            //console.log(newSum, "New Sum")
-            var newSource = this.banglaConverter(newSum)
-            // this.slideValue(index2)
-
-            // addCount = addCount + 1
-            // console.log(addCount, "ADD COUNT")
-            // if(addCount >= 4 && discardCount < 4){
-            //   discardCount = discardCount + 1
-            //   addCount = 0
-            //   console.log(addCount, 'should be zero')
-            // }
-            if (discardCount < 4) {
-              addCount = addCount + 1
-              if (addCount >= 4) {
-                discardCount = discardCount + 1
-                addCount = 0
-                console.log(addCount, 'should be zero')
-              }
-            }
-
-            topSection[j - 4].value = newSum
-            items[j - 4].src = newSource
-
-            topSection[j].value = topSection[j + 4].value
-            items[j].src = items[j + 4].src
-
-            topSection[j + 4].value = 0
-            items[j + 4].src = initialSource
-            points = points + 1
-            this.setState({ points: points, second: this.state.second + 5 })
-            // console.log("Points: ", points)
-            this.checkSum()
-          }
-        }
-
-      }
-      if (j >= 12 && j <= 15) {
-        if (items[j - 4].src != initialSource) {
-          if (topSection[j - 4].value == topSection[j].value) {
-            newSum = topSection[j].value + topSection[j - 4].value
-            //To set the max limit to 2048
-            if (newSum > 2048) {
-              newSum = 2048
-            }
-            var newSource = this.banglaConverter(newSum)
-            // this.slideValue(index2)
-
-            // addCount = addCount + 1
-            // console.log(addCount, "ADD COUNT")
-            // if(addCount >= 4 && discardCount < 4){
-            //   discardCount = discardCount + 1
-            //   addCount = 0
-            //   console.log(addCount, 'should be zero')
-            // }
-            if (discardCount < 4) {
-              addCount = addCount + 1
-              if (addCount >= 4) {
-                discardCount = discardCount + 1
-                addCount = 0
-                console.log(addCount, 'should be zero')
-              }
-            }
-
-            topSection[j - 4].value = newSum
-            items[j - 4].src = newSource
-
-            topSection[j].value = 0
-            items[j].src = initialSource
-            points = points + 1
-            this.setState({ points: points, second: this.state.second + 5 })
-            // console.log("Points: ", points)
-            this.checkSum()
-          }
-        }
-      }
-
     }
-
-  }
-
-  discard() {
-    var updateCount = this.state.updateCount
-    // var discardCount = this.state.discardCount
-    var a = Math.floor(Math.random() * 8) + 1;
-    var powerOf2 = Math.pow(2, a)
-
-    updateCount[1].value = updateCount[0].value
-    updateCount[0].value = powerOf2
-
-    randItem[1].src = randItem[0].src
-    randItem[0].src = this.banglaConverter(powerOf2)
-
-    discardCount = discardCount - 1
-    // Alert.alert(JSON.stringify(this.state.discardCount))
-    this.setState({ uri: randItem[0].src })
-  }
-
-  gameOver() {
-    var initialSource = "                        "
-    var topSection = this.state.topSection
-    var updateCount = this.state.updateCount
-    var count = 0
-    for (var j = 12; j <= 15; j++) {
-      if (items[j].src != initialSource) {
-        if (topSection[j].value != updateCount[1].value) {
-          count += 1
-          console.log("DIDN'T MATCH")
-        }
-      }
+    // console.log(one)
+    if (one == words[i].length) {
+        // console.log("One:", one, " Word length:", words[i].length)
+        wordList.push(words[i])
     }
-    if (count == 4) {
-      return true
-    }
-    else {
-      return false
-    }
-  }
-
-  bannerError(e) {
-    alert(e);
-  }
-
-  gameOverAlert() {
-    const { navigate, state } = this.props.navigation
-    var points = this.state.points
-
-    Alert.alert(
-      'খেলা শেষ',
-      ' ',
-      [
-        {
-          text: 'CONTINUE', onPress: () => navigate(
-            "Over", { points: this.state.points }
-          )
-        },
-
-        // {text: 'বন্ধু', onPress: () => this.props.navigation.navigate('NewKeyboard', {reload:this.props.navigation.getParam("reload"), gameName: this.state.text, value: this.state.gametype,bot:false})}
-
-      ],
-      { cancelable: false })
-    { interstitial.show() }
-  }
-
-  getTextStyle(id) {
-    if (id == 1) {
-      return {
-        backgroundColor: '#000000',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-        margin: 3,
-        height: Dimensions.get('window').width / 4, // approximate a square
-        paddingTop: 0,
-        borderRadius: 30
-      }
-    } else {
-      return {
-        backgroundColor: '#C0C0C0',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-        margin: 3,
-        height: Dimensions.get('window').width / 4, // approximate a square
-        paddingTop: 0,
-        borderRadius: 30
-      }
-    }
-  }
-
-  getTimeStyle(time){
-    if(time <= 10){
-      return{
-        textAlign: 'center',
-        height: 50,
-        width: 50,
-        borderWidth: 5,
-        borderColor: '#000000',
-        borderRadius: 20,
-        backgroundColor: "#FF0000",
-        fontSize: 23, fontWeight: "bold",
-        textAlignVertical: "center"
-      }
-    }
-    else if(time >= 100){
-      return{
-        textAlign: 'center',
-        height: 50,
-        width: 50,
-        borderWidth: 5,
-        borderColor: '#000000',
-        borderRadius: 20,
-        backgroundColor: "#00FF00",
-        fontSize: 23, fontWeight: "bold",
-        textAlignVertical: "center"
-      }
-    }
-    else{
-      return{
-        textAlign: 'center',
-        height: 50,
-        width: 50,
-        borderWidth: 5,
-        borderColor: '#000000',
-        borderRadius: 20,
-        backgroundColor: "#FFFF00",
-        fontSize: 23, fontWeight: "bold",
-        textAlignVertical: "center"
-      }
-    }
-  }
-
-
-  render() {
-    let topSection = this.state.topSection
-    let updateCount = this.state.updateCount
-    var sumValue = this.state.sumValue
-    var flag = this.state.flag
-    var flag2 = this.state.flag2
-    var index2 = this.state.index2
-    var points = this.state.points
-    var second = this.state.second
-
-    const { navigate, state } = this.props.navigation
-
-    return (
-      <View>
-        {/* <Ad /> */}
-        <View>
-        {/* <BannerAd unitId={TestIds.BANNER} /> */}
-        <BannerAd
-          unitId={adUnitId2}
-          size={BannerAdSize.SMART_BANNER}
-          requestOptions={{
-            requestNonPersonalizedAdsOnly: true,
-
-          }}
-        />
-        </View>
-        {/* <View style={{ top: 10}}>  */}
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={{ fontSize: 23, fontWeight: "bold", alignItems: "center", textAlign: "center", textAlignVertical: "center", bottom: 0, flex: 1 }}>
-            পয়েন্ট: {this.state.points}
-          </Text>
-          <View style={{
-            // flex: 1,
-            // flexDirection: 'row',
-            margin: 0
-          }}>
-            <Text style={this.getTimeStyle(this.state.second)}>{this.state.second}</Text>
-          </View>
-          <Text style={{ fontSize: 23, fontWeight: "bold", alignItems: "center", textAlign: "center", textAlignVertical: "center", bottom: 0, flex: 1 }}>
-          বাতিল: {discardCount}
-          </Text>
-        </View>
-      
-      {/* </View> */}
-        {/* Gameboard Section */}
-        <View style={{ top: 0 }}>
-          <FlatList
-            data={this.state.dataSource}
-            renderItem={({ item }) => (
-              <View style={styles.item}>
-                <TouchableOpacity onPress={() => {
-                  this.sound()
-                  // this.checkSum()
-                  var initialSource = ("                        ")
-                  var cleanSum = 0
-                  var index1 = item.id
-                  var val2 = topSection[index1].value
-
-                  if (flag && flag2) {
-                    // this.slideValue(index2)
-                    let cloneSum = JSON.parse(JSON.stringify(this.state.sumValue))
-
-                    //Checks if pressed index matches with                         
-                    if (item.src == initialSource) {
-                      this.slideValue(index2)
-
-                      //Finding out the pressed index and checks if it is empty
-                      if (item.id >= 0 && item.id <= 3) {
-                        item.src = this.banglaConverter(this.state.sumValue)
-                        topSection[index1].value = sumValue
-                        this.setState({ uri: item.src, sumValue: cleanSum, flag: false })
-                      }
-                      else if (item.id >= 4 && item.id <= 7) {
-                        if (items[item.id - 4].src == initialSource) {
-                          this.setAbove(item.id, this.state.sumValue, topSection)
-                          this.setState({ sumValue: cleanSum, flag: false })
-                        }
-                        else {
-                          item.src = this.banglaConverter(this.state.sumValue)
-                          topSection[index1].value = sumValue
-                          this.setState({ uri: item.src, sumValue: cleanSum, flag: false })
-                        }
-                      }
-
-                      else if (item.id >= 8 && item.id <= 11) {
-                        if (items[item.id - 8].src != initialSource) {
-                          if (items[item.id - 4].src != initialSource) {
-                            item.src = this.banglaConverter(this.state.sumValue)
-                            topSection[index1].value = sumValue
-                            this.setState({ uri: item.src, sumValue: cleanSum, flag: false })
-                          }
-                          else {
-                            this.setAbove(item.id, this.state.sumValue, topSection)
-                            this.setState({ sumValue: cleanSum, flag: false })
-                          }
-                        }
-                        else {
-                          this.setAbove(item.id, this.state.sumValue, topSection)
-                          this.setState({ sumValue: cleanSum, flag: false })
-                        }
-                      }
-
-                      else if (item.id >= 12 && item.id <= 15) {
-                        if (items[item.id - 12].src != initialSource) {
-                          if (items[item.id - 8].src != initialSource) {
-                            if (items[item.id - 4].src != initialSource) {
-                              item.src = this.banglaConverter(this.state.sumValue)
-                              topSection[index1].value = sumValue
-                              this.setState({ uri: item.src, sumValue: cleanSum, flag: false })
-                            }
-                            else {
-                              this.setAbove(item.id, this.state.sumValue, topSection)
-                              this.setState({ sumValue: cleanSum, flag: false })
-                            }
-                          }
-                          else {
-                            this.setAbove(item.id, this.state.sumValue, topSection)
-                            this.setState({ sumValue: cleanSum, flag: false })
-                          }
-                        }
-                        else {
-                          this.setAbove(item.id, this.state.sumValue, topSection)
-                          this.setState({ sumValue: cleanSum, flag: false })
-                        }
-                      }
-                      // this.checkSum(cloneSum, item.id, sumValue)
-                    }
-                    else {
-                      // this.slideValue(index2)
-                      //Checks if the box below is empty OR if the index is within the range of 12 and 15
-                      if (topSection[index1 + 4] == initialSource || (index1 >= 12 && index1 <= 15)) {
-
-                        //If the selected value from the "Random Section" is equal to the existing number on the Gameboard
-                        if (this.state.sumValue == parseInt(val2)) {
-                          this.slideValue(index2)
-                          // console.log(second, "second")
-
-                          //             addCount = addCount + 1
-                          //             console.log(addCount, "ADD COUNT")
-                          // if(addCount >= 4 && discardCount < 4){
-                          //   discardCount = discardCount + 1
-                          //   addCount = 0
-                          //   console.log(addCount, 'should be zero')
-                          // }
-                          if (discardCount < 4) {
-                            addCount = addCount + 1
-                            if (addCount >= 4) {
-                              discardCount = discardCount + 1
-                              addCount = 0
-                              console.log(addCount, 'should be zero')
-                            }
-                          }
-
-                          var sum2 = this.state.sumValue + parseInt(val2)
-                          if (sum2 > 2048) {
-                            sum2 = 2048
-                          }
-                          topSection[index1].value = sum2
-                          points = points + 1
-                          this.setState({ sumValue: sum2, second: this.state.second + 5 }, () => {
-                            item.src = this.banglaConverter(sum2)
-                            this.setState({ uri: item.src, points: points })
-                          })
-                        }
-                      }
-                      else {
-                        this.setBelow(item.id, this.state.sumValue, topSection)
-                      }
-
-                      cleanSum = 0;
-                      this.setState({ sumValue: cleanSum, flag: false, index2: cleanSum })
-                    }
-                  }
-                  if (this.gameOver() && discardCount == 0) {
-                    // <Ad />
-                    //When game is over time is set to ZERO so that time function (onStart) doesn't keep running
-                    //This setState section will prevent the AD to render twice, as the show Ad function is also called in the time function
-                    this.setState({ second: 0 }, () => {
-                      clearInterval(this._interval);
-                    })
-                    //Shows Ad and Navigates to Game Over Page
-                    this.gameOverAlert()
-                    // {interstitial.show()}
-                    // {navigate(
-                    //   "Over" , {points: this.state.points}
-                    //  )}
-
-
-                    // Alert.alert("GAME OVER")
-                  }
-                  //   if(item.src == 2){item.src = "২"
-                  // this.setState({uri: item.src})}
-                  // if(items[index1].src == 2){
-                  // items[index1].src = "২"
-                  // item.src = "২"
-                  // this.setState({uri: item.src})
-                  // }
-                }}>
-
-                  <Text style={styles.itemText}>{item.src}</Text>
-                </TouchableOpacity>
-
-              </View>
-            )}
-            //Setting the number of column
-            numColumns={4}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
-        {/* <Advert /> */}
-        {/* <View>   */}
-        {/* <CountDown
-            until={10}
-            size={30}
-            onFinish={() => alert('Finished')}
-            digitStyle={{backgroundColor: '#FFF'}}
-            digitTxtStyle={{color: '#1CC625'}}
-            timeToShow={['M', 'S']}
-            timeLabels={{m: 'MM', s: 'SS'}}
-          /> */}
-        {/* </View> */}
-
-        {/* Random Number generator section */}
-        <View style={{ paddingTop: 15, top: -10 }}>
-          <FlatList
-            data={this.state.randSource}
-            renderItem={({ item }) => (
-              <View style={this.getTextStyle(item.id)}>
-                <TouchableOpacity onPress={() => {
-
-                  var index = item.id
-                  var val1 = updateCount[index].value
-                  if (index == 1) {
-                    if (!flag) {
-                      if (!flag2) {
-                        this.onStart()
-                        this.setState({ flag2: true })
-                      }
-                      // <Ad />
-
-                      // interstitial.show()
-
-                      // this.checkSum()
-                      console.log("Final Points: ", points)
-                      var sum = this.state.sumValue + parseInt(val1)
-                      var passIndex = this.state.index2 + index
-                      this.setState({ sumValue: sum, flag: true, updateCount: this.state.updateCount, index2: this.state.index2 + passIndex })
-
-
-                    }
-
-                  }
-                  if (discardCount == 0) {
-                    if (this.gameOver()) {
-                      // <Ad />
-                      //When game is over time is set to ZERO so that time function (onStart) doesn't keep running
-                      //This setState section will prevent the AD to render twice, as the show Ad function is also called in the time function
-                      this.setState({ second: 0 }, () => {
-                        clearInterval(this._interval);
-                      })
-                      this.gameOverAlert()
-
-                    }
-                  }
-
-
-                  // })
-
-                }}
-                  onLongPress={() => {
-                    // var jsonDiscardCount = JSON.stringify(discardCount)
-                    this.setState({ flag: false, sumValue: 0, index2: 0 })
-                    if (item.id == 1 && discardCount > 0) {
-                      this.discard()
-                    }
-                    else if (discardCount == 0) {
-                      Alert.alert("DISCARD LIMIT HAS REACHED")
-                      if (this.gameOver()) {
-                        // <Ad />
-                        //When game is over time is set to ZERO so that time function (onStart) doesn't keep running
-                        //This setState section will prevent the AD to render twice, as the show Ad function is also called in the time function
-                        this.setState({ second: 0 }, () => {
-                          clearInterval(this._interval);
-                        })
-                        //Shows Ad and Navigates to Game Over Page
-                        this.gameOverAlert()
-                        // {interstitial.show()}
-                        // {navigate(
-                        //   "Over" , {points: this.state.points}
-                        //  )}
-
-
-                        // Alert.alert("GAME OVER")
-                      }
-                      // this.gameOver()
-                    }
-
-                    // else if(this.gameOver()){
-                    //   Alert.alert("GAME OVER")
-                    // }
-                  }}>
-                  <Text style={styles.itemText2}>{item.src}</Text>
-                </TouchableOpacity>
-
-              </View>
-            )}
-            //Setting the number of column
-            numColumns={2}
-            keyExtractor={(randItem, index) => index.toString()}
-          />
-        </View>
-      </View>
-    );
-  }
 }
+    console.log("Generated Words:", wordList)
+
+    
+    //To generate an array of letters to be deleted from the Randomly selected letters
+    var alpha3 = [...alpha]
+    var x
+    for(var i = 0; i < wordList.length; i++){
+        var newWordList = wordList[i].split('')
+        // console.log(newWordList)
+        var newWordList2 = [...newWordList]
+        for(var j = 0; j < newWordList2.length; j++){
+            // console.log("hahaha")
+            for(var k = 0; k < alpha3.length; k++){
+                if(newWordList2[j] == alpha3[k]){
+                    // console.log(newWordList2[j], "=", alpha3[k])
+                    alpha3.splice(k, 1)
+                    newWordList2.splice(j, 1, '')
+                    // console.log(alpha3)
+                    // alpha3 = alpha3
 
 
-const styles = StyleSheet.create({
-  MainContainer: {
-    justifyContent: 'center',
-    flex: 1,
-    paddingTop: 0,
-    // backgroundColor: "#FFB6C1"
-  },
-  imageThumbnail: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 100,
-    // borderColor: '#000000'
-    // backgroundColor: "#FFB6C1",
-  },
-  itemText: {
-    color: '#000000',
-    fontSize: 34
-  },
-  itemText2: {
-    color: '#fff',
-    fontSize: 50
-  },
-  item: {
-    backgroundColor: '#FFB6C1',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    margin: 1,
-    height: Dimensions.get('window').width / 4, // approximate a square,
-    borderRadius: 6
-  },
-  item2: {
-    backgroundColor: '#000000',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    margin: 3,
-    height: Dimensions.get('window').width / 4, // approximate a square
-    paddingTop: 0
-  },
-  secondText: {
-    paddingTop: 15,
-    fontSize: 30,
-    fontWeight: "bold",
-    // alignItems: "center", 
-    textAlign: "center",
-    textAlignVertical: "center",
-    // bottom: 20
-  },
-  MainContainer1: {
+                    // k += 1
+                    break
+                }
+                else{
+                    // console.log(newWordList[j], "!=", alpha[k])
+                    // console.log(alpha3, "ELSE SECTION")
 
-    // Setting up View inside content in Vertically center.
-    // justifyContent: 'center',
-    // flex: 1,
-    // flexDirection: 'row',
-    margin: 0
+                }
+            }
+        }
+        // alphaFromWord.push(alpha3)
+                    // console.log(alpha3, "baad")
+    }
+    
 
-  },
+        //To generate the final set of letters
+        var alpha4 = [...alpha]
+        for(var i = 0; i < alpha3.length; i++){
+            for(var j = 0; j < alpha4.length; j++){
+                if(alpha3[i] == alpha4[j]){
+                    alpha3.splice(i, 1, '')
+                    alpha4.splice(j, 1)
+                    break
+                }
+            }
+        }
+        console.log("Final Set of Letters:",alpha4)
+        console.log(alpha4.length)
 
-  TextInputStyleClass: {
+            // var alphaFromWord = []
 
-    // Setting up Hint Align center.
-    textAlign: 'center',
+           // var alphabet = [];
+        // for(var i = 0; i < alpha.length; i++){
+        //     for(var j = 0; j < alpha3.length; j ++){
+        //       var loc = alpha.indexOf(alpha3[j]);
+        //       if(loc > -1){
+        //         alpha.splice(loc, 1);
+        //       }
+        //     }
+        //   }
 
-    // Setting up TextInput height as 50 pixel.
-    height: 50,
-    width: 50,
 
-    // Set border width.
-    borderWidth: 5,
+        // alpha = alpha.toString().split(',');
+        // alpha3 = alpha3.toString().split(',');
 
-    // Set border Hex Color Code Here.
-    borderColor: '#000000',
+        // for (var i in alpha) {
+        //     if (alpha3.indexOf(alpha[i]) === -1) {alphabet.push(alpha[i])};
+            
+        // }
+        // for (i in alpha3) {
+        //     if (alpha.indexOf(alpha3[i]) === -1) alphabet.push(alpha3[i]);
+        // }
+        // alphabet.sort((a, b) => a - b);
 
-    // Set border Radius.
-    borderRadius: 20,
+        // console.log(alpha, "Alpha")
+        // console.log("Deleted Letters:", alpha3)
+        
 
-    //Set background color of Text Input.
-    backgroundColor: "#FFFF00",
-    fontSize: 23, fontWeight: "bold",
-    textAlignVertical: "center"
 
-  }
-});
+    // for(var i = 0; i < wordList.length; i++){
+    //     // var newWordList = wordList[i - 1].split('')
+    //     var newWordList = wordList[i].split('')
+
+    //     for(var j = 0; j < newWordList.length; j++){
+    //         for(var k = 0; k < alpha.length; k++){
+
+    //         if(alpha[k] != newWordList[j]){
+    //             alphaFromWord.push(alpha[k])
+    //             break
+    //             // console.log(alpha[k])
+    //         }
+    //     }
+    // }
+        // alphaFromWord.push(newWordList)
+
+        // console.log(newWordList, 'and', newWordList2)
+        // var alpha3 = [...alpha]
+        // for(var j = 0; j < newWordList.length; j++){
+        //     // if(newWordList[j] == new)
+        //     for(var k = 0; k < newWordList2.length; k++){
+        //         if(newWordList[j] != newWordList2[k]){
+        //             alphaFromWord.push(newWordList[j], newWordList2[k])
+        //             newWordList2.splice(k, 1)
+        //             break
+        //         }
+            //     if(newWordList[j] == alpha[k]){
+            //         // console.log("KEEPING IT", newWordList[j])
+            //         alphaFromWord.push(newWordList[j])
+            //         alpha3.splice(k, 1, 1)
+            //         break
+            //     }
+                // else{
+                //     // console.log("COULDNT FIND", newWordList[j])
+                //     console.log(newWordList[j])
+                // }
+            // }
+        // }
+    // }
+    // console.log(alphaFromWord)
+    // Loop to select random number of SELECTED words
+    // var numberOfWords = Math.floor(Math.random() * 3) + 1 
+    // for(var a = 0; a <= numberOfWords; a++){
+    //     finalWordList.push(wordList[a])
+    // }
+
+    // console.log(finalWordList)
+
