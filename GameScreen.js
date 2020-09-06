@@ -220,6 +220,17 @@ class GameScreen extends Component {
           </View>
         </View>
         <View style={{
+          // flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          paddingBottom: 10
+          // backgroundColor: "red"
+        }}>
+          <View style={{ width: 100,  backgroundColor: 'beige' }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', justifyContent: 'center', textAlignVertical: 'center', textAlign: 'center', borderWidth: 5 }}>{storeWord}</Text>
+              </View>
+          </View>
+        <View style={{
           flex: 1,
           flexDirection: 'row',
           justifyContent: 'space-evenly',
