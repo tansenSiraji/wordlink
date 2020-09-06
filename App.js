@@ -17,8 +17,7 @@ class TomarScreen extends React.Component {
 const RootStack = createStackNavigator(
   {
     Home: HomeScreen,
-    Game: GameScreen,
-    
+    Game: GameScreen    
   },
   {
     initialRouteName: 'Home',
