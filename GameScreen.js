@@ -12,7 +12,7 @@ var alpha = [], alpha1 = [], alpha2 = [], alpha3 = [],  alpha5 = [], wordList = 
 class GameScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {box1 : '', box2: '', box3: '', alpha4: [], storeWord: [], splitMatchedWord: [], wordListLength: 0, wordListLengthArray: []}
+    this.state = {box1 : '', box2: '', box3: '', alpha4: [], storeWord: [], splitMatchedWord: [], wordListLength: 0, wordListLengthArray: [], flag: false}
 
   }
   static navigationOptions = {
@@ -72,13 +72,13 @@ wordBoxGenerator(alpha4){
     for(var i = 0; i < splitMatchedWord.length; i++){
       // var a = splitMatchedWord[i]
       console.log("WORD BOX LOOP")
-      
+    }
     
     return (
       <View>
       <View key = {index} style={styles.middle} ><Text style={{ fontSize: 20, fontWeight: 'bold', justifyContent: 'center', textAlignVertical: 'center', textAlign: 'center', borderWidth: 5 }}>{splitMatchedWord[index]}</Text></View>
       </View>
-    )}
+    )
   })
   
   }
@@ -190,6 +190,7 @@ wordBoxGenerator(alpha4){
   addLetters(alphabet){
     var storeWord = this.state.storeWord
     var splitMatchedWord = this.state.splitMatchedWord
+    var flag = this.state.flag
     storeWord.push(alphabet)
     var wordForMatch = storeWord.join('')
     for(var i = 0; i < words.length; i++){
@@ -198,11 +199,13 @@ wordBoxGenerator(alpha4){
         splitMatchedWord = words[i].split('')
       }
     }
-    this.setState({splitMatchedWord: splitMatchedWord})
+    this.setState({splitMatchedWord: splitMatchedWord, flag: true})
     console.log("STORE WORD", wordForMatch)
     console.log("MATCHED WORD", matchedWord)
     console.log("SPLIT MATCHED WORD", splitMatchedWord)
-    return splitMatchedWord
+    if(flag){
+      this.setState({storeWord: [], flag: false})
+    }
   }
 
   render() {
