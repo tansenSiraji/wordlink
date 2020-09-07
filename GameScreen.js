@@ -227,8 +227,8 @@ wordBoxGenerator(ind){
       if(wordForMatch == words[i]){
         var matchedWord = words[i]
         splitMatchedWord = words[i].split('')
-        if(flag && !flag2){
-          this.setState({storeWord: [], flag: false, flag2: true})
+        if(flag){
+          this.setState({storeWord: [], flag: false})
         }
       }
     }
