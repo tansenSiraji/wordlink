@@ -29,7 +29,7 @@ class GameScreen extends Component {
   componentDidMount(){
     var that = this;
     var wordListLengthArray = this.state.wordListLengthArray
-    wordListLengthArray.length = 0
+    
     this.alphabetGenerator()
     this.wordBoxGenerator()
     // items = () => {
@@ -55,22 +55,30 @@ class GameScreen extends Component {
 
 // }
 
-wordBoxGenerator(){
+wordBoxGenerator(alpha4){
   // wordList = []
   var wordListLength = this.state.wordListLength
   var wordListLengthArray = this.state.wordListLengthArray
+  var alpha4 = this.state.alpha4
+  var splitMatchedWord = this.state.splitMatchedWord
 
   console.log(wordListLength, "WordList Length")
+  
 
   // var splitWordList = wordList[0].split('')
   // var length = splitWordList.length
   return this.state.wordListLengthArray.map((data, key) => {
     const index = key
+    for(var i = 0; i < splitMatchedWord.length; i++){
+      // var a = splitMatchedWord[i]
+      console.log("WORD BOX LOOP")
+      
+    
     return (
       <View>
-      <View key = {index} style={{ width: 50, height: 50, backgroundColor: 'beige' }} ><Text>{wordListLength}</Text></View>
+      <View key = {index} style={styles.middle} ><Text style={{ fontSize: 20, fontWeight: 'bold', justifyContent: 'center', textAlignVertical: 'center', textAlign: 'center', borderWidth: 5 }}>{splitMatchedWord[index]}</Text></View>
       </View>
-    )
+    )}
   })
   
   }
@@ -81,7 +89,7 @@ wordBoxGenerator(){
     var alpha4 = this.state.alpha4
     var wordListLength = this.state.wordListLength
     var wordListLengthArray = this.state.wordListLengthArray
-    
+    wordListLengthArray.length = 0
 
     //Randomly Generated Letters
     var alphabet = "abcdefghijklmnopqrstuvwxyz"
@@ -144,16 +152,18 @@ wordBoxGenerator(){
       }
     }
 
+    //Generate WordListLengthArray to generate multiple wordbox dynamically
     // wordListLengthArray = []
     var wordListJoin = wordList.join('')
     console.log(wordListJoin, "WordList Join")
     wordListLength = wordListJoin.length
+    this.setState({wordListLength: wordListLength})
     while(wordListLength > 0){
-      wordListLengthArray.push(1)
+      wordListLengthArray.push('')
       wordListLength -= 1
     }
 
-    this.setState({wordListLength: wordListLength})
+    
     console.log(wordListLengthArray, "Length")
 
     //To generate the final set of letters
@@ -301,6 +311,7 @@ wordBoxGenerator(){
                 <TouchableOpacity
               onPress={() => {
                 this.addLetters(alpha4[0])
+                this.wordBoxGenerator()
                 // Alert.alert("A")
                 box1 = alpha4[0]
 
@@ -321,6 +332,7 @@ wordBoxGenerator(){
               <TouchableOpacity
               onPress={() => {
                 this.addLetters(alpha4[3])
+                this.wordBoxGenerator()
                 // Alert.alert("A")
                 box4 = alpha4[3]
                 this.setState({ box4: box4 })
@@ -334,6 +346,7 @@ wordBoxGenerator(){
             <TouchableOpacity
               onPress={() => {
                 this.addLetters(alpha4[1])
+                this.wordBoxGenerator()
                 box2 = alpha4[1]
                 this.setState({ box2: box2 })
               }}
