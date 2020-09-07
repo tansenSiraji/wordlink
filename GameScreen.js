@@ -12,7 +12,7 @@ var alpha = [], alpha1 = [], alpha2 = [], alpha3 = [],  alpha5 = [], wordList = 
 class GameScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {box1 : '', box2: '', box3: '', alpha4: [], storeWord: [], splitMatchedWord: [], wordListLength: 0, wordListLengthArray: [], flag: false}
+    this.state = {box1 : '', box2: '', box3: '', alpha4: [], storeWord: [], splitMatchedWord: [], wordListLength: 0, wordListLengthArray: [], flag: false, flag2: false}
 
   }
   static navigationOptions = {
@@ -55,31 +55,47 @@ class GameScreen extends Component {
 
 // }
 
-wordBoxGenerator(alpha4){
+wordBoxGenerator(ind){
   // wordList = []
   var wordListLength = this.state.wordListLength
+  // var wordList = this.state.wordList
   var wordListLengthArray = this.state.wordListLengthArray
   var alpha4 = this.state.alpha4
   var splitMatchedWord = this.state.splitMatchedWord
+  var flag2 = this.state.flag2
 
-  console.log(wordListLength, "WordList Length")
-  
+  console.log(wordListLengthArray.length, "WordList Length")
+  // console.log(, "wordList")
+  console.log(ind, 'ind',wordList[ind])
+  // return wordList.map((data, key) => {
+    // const index1 = key
+    for(var i = 0; i < wordList.length; i++){
+      var wordSplit = []
+      wordSplit = wordList[i].split('')
+      console.log(wordList[i], 'wordsp')
+      console.log(wordSplit, 'wordsplit length:', wordSplit.length)
+      
+        return wordSplit.map((data, key) => {
+          const index = key
+          
+          return (
+            <View style={{
+              flexDirection: "column",
+              justifyContent: 'space-evenly',
+            }}>
+            <View key = {index} style = {styles.middle} ><Text style={{ fontSize: 20, fontWeight: 'bold', justifyContent: 'center', textAlignVertical: 'center', textAlign: 'center', borderWidth: 5 }}>{splitMatchedWord[index]}</Text></View>
+            </View>
+            
+          )
+        })
+      // }
+    }
+    
+  // })
 
   // var splitWordList = wordList[0].split('')
   // var length = splitWordList.length
-  return this.state.wordListLengthArray.map((data, key) => {
-    const index = key
-    for(var i = 0; i < splitMatchedWord.length; i++){
-      // var a = splitMatchedWord[i]
-      console.log("WORD BOX LOOP")
-    }
-    
-    return (
-      <View>
-      <View key = {index} style={styles.middle} ><Text style={{ fontSize: 20, fontWeight: 'bold', justifyContent: 'center', textAlignVertical: 'center', textAlign: 'center', borderWidth: 5 }}>{splitMatchedWord[index]}</Text></View>
-      </View>
-    )
-  })
+  
   
   }
 
@@ -154,14 +170,27 @@ wordBoxGenerator(alpha4){
 
     //Generate WordListLengthArray to generate multiple wordbox dynamically
     // wordListLengthArray = []
-    var wordListJoin = wordList.join('')
-    console.log(wordListJoin, "WordList Join")
-    wordListLength = wordListJoin.length
+    for(var i = 0; i < wordList.length; i++){
+      // var wordListJoin = wordList.join('')
+    // console.log(wordListJoin, "WordList Join")
+    wordListLength = wordList[i].length
+    console.log(wordList[i], 'words from list')
     this.setState({wordListLength: wordListLength})
-    while(wordListLength > 0){
-      wordListLengthArray.push('')
-      wordListLength -= 1
+    
     }
+    while(wordListLength > 0){
+          wordListLengthArray.push('')
+          wordListLength -= 1
+        }
+    
+    // var wordListJoin = wordList.join('')
+    // console.log(wordListJoin, "WordList Join")
+    // wordListLength = wordListJoin.length
+    // this.setState({wordListLength: wordListLength})
+    // while(wordListLength > 0){
+    //   wordListLengthArray.push('')
+    //   wordListLength -= 1
+    // }
 
     
     console.log(wordListLengthArray, "Length")
@@ -178,7 +207,7 @@ wordBoxGenerator(alpha4){
       }
     }
     console.log("Final Set of Letters:", alpha4)
-    console.log(alpha4.length)
+    // console.log(alpha4.length)
 
     if(alpha4.length != 4){
       this.alphabetGenerator()
@@ -191,21 +220,23 @@ wordBoxGenerator(alpha4){
     var storeWord = this.state.storeWord
     var splitMatchedWord = this.state.splitMatchedWord
     var flag = this.state.flag
+    var flag2 = this.state.flag2
     storeWord.push(alphabet)
     var wordForMatch = storeWord.join('')
     for(var i = 0; i < words.length; i++){
       if(wordForMatch == words[i]){
         var matchedWord = words[i]
         splitMatchedWord = words[i].split('')
+        if(flag && !flag2){
+          this.setState({storeWord: [], flag: false, flag2: true})
+        }
       }
     }
     this.setState({splitMatchedWord: splitMatchedWord, flag: true})
-    console.log("STORE WORD", wordForMatch)
-    console.log("MATCHED WORD", matchedWord)
-    console.log("SPLIT MATCHED WORD", splitMatchedWord)
-    if(flag){
-      this.setState({storeWord: [], flag: false})
-    }
+    // console.log("STORE WORD", wordForMatch)
+    // console.log("MATCHED WORD", matchedWord)
+    // console.log("SPLIT MATCHED WORD", splitMatchedWord)
+    
   }
 
   render() {
@@ -239,18 +270,34 @@ wordBoxGenerator(alpha4){
         <ImageBackground source={require('./Assets/Background.png')} style={styles.image}>
         <View style={{
           flex:3,
-          flexDirection: 'column',
+          flexDirection: 'row',
           // alignItems: "center",
           justifyContent: 'space-evenly',
           // backgroundColor: "blue"
         }}>
           {/*Upper Section View*/}
+          {}
           <View style={{
-            flexDirection: "row",
+            flexDirection: "column",
             justifyContent: 'space-evenly',
           }}>
             {/* <Text>Upper Section</Text> */}
-            {this.wordBoxGenerator()}
+            {wordList.map((data, key) => {
+              for(var i = 0; i < wordList.length; i++){
+                var x = wordList[i].split
+                console.log(x, wordList[i])
+              }
+              var index = key
+              return <View style = {{flexDirection: "row",}}>{this.wordBoxGenerator(x)}</View>
+            })}
+            
+            </View>
+            {/* <View style={{
+            flexDirection: "row",
+            justifyContent: 'space-evenly',
+          }}> */}
+            {/* <Text>Upper Section</Text> */}
+            {/* {this.wordBoxGenerator()} */}
             {/* <View style={styles.middle}>
               <Text style={{ fontSize: 30, fontWeight: 'bold', justifyContent: 'center', textAlignVertical: 'center', textAlign: 'center' }}>{this.state.splitMatchedWord[0]}</Text>
             </View>
@@ -263,7 +310,26 @@ wordBoxGenerator(alpha4){
             <View style={styles.middle}>
               <Text style={{ fontSize: 30, fontWeight: 'bold', justifyContent: 'center', textAlignVertical: 'center', textAlign: 'center' }}>{this.state.splitMatchedWord[3]}</Text>
             </View> */}
-          </View>
+          {/* </View>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          */}
         </View>
         <View style={{
           // flex: 1,
